@@ -1,76 +1,169 @@
-# Weather Forecasting App
+# E-commerce Application
 
-## Overview
+This is a simple e-commerce application that provides functionality for managing a shopping cart and processing orders.
 
-This Weather Forecasting App provides a simple interface for fetching weather data. It integrates with a weather API to provide forecast summaries and hourly forecasts for specified cities or locations based on coordinates.
+## Cart API
 
-## Features
+### CartController
 
-- **Get Forecast Summary by City:** Retrieve forecast summaries for a specified city.
-- **Get Hourly Forecast by City:** Retrieve hourly forecasts for a specified city.
-- **Get Forecast Summary by Coordinates:** Retrieve forecast summaries for a specified location based on latitude and longitude.
+The CartController is responsible for handling operations related to the shopping cart in the e-commerce application.
 
-## Setup
+#### Endpoints
 
-1. **Clone the Repository:**
-git clone https://github.com/your-username/weather-forecast-app.git
+##### Add Item to Cart
 
-2. **Configure API Key and Host:**
-- Obtain an API key and host from the weather API provider.
-- Set the API key and host in the `application.properties` file.
-  ```
-  X-RapidAPI-Host=your-api-host
-  X-RapidAPI-Key=your-api-key
-  ```
+- Endpoint: `/cart/add`
+- Method: POST
+- Functionality: Adds an item to the shopping cart.
+- Request Body:
+  {
+    "name": "ExampleItem",
+    "price": 19.99
+  }
 
-3. **Build and Run:**
-- Build the project using Maven:
-  ```
-  mvn clean install
-  ```
-- Run the application:
-  ```
-  mvn spring-boot:run
-  ```
+##### Get Cart
 
-4. **Access the API Endpoints:**
-- The application exposes RESTful endpoints for accessing weather data.
-- Example endpoints:
-  - Forecast Summary by City: `GET /forecast/summary/{city}`
-  - Hourly Forecast by City: `GET /forecast/hourly/{city}`
-  - Forecast Summary by Coordinates: `GET /forecast/summary/{latitude}/{longitude}`
+- Endpoint: `/cart/get`
+- Method: GET
+- Functionality: Retrieves the current items in the shopping cart.
 
-## Technologies Used
+#### Usage
 
-- Java
-- Spring Boot
-- RestTemplate
-- Maven
+Make requests to the provided endpoints to manage the shopping cart.
 
-## Project Structure
+#### CartService
 
-The project follows a standard Spring Boot structure:
-- `src/main/java`: Contains Java source code.
-- `com.assessment.WeatherApp.service.impl`: Implementation of the WeatherService interface.
-- `src/main/resources`: Contains application properties and other resources.
-- `application.properties`: Configuration file for API key and host.
+The CartService provides business logic for managing the shopping cart in the e-commerce application.
 
-## API Documentation
+##### Methods
 
-Explore the API using Swagger. The documentation is available at:
-[Swagger Documentation](http://localhost:8080/swagger-ui.html)
-Make sure the application is running locally before accessing the Swagger documentation.
+###### addItemToCart(String itemName, double price)
 
+- Functionality: Adds an item to the shopping cart.
+- Parameters:
+  - itemName: Name of the item to be added.
+  - price: Price of the item to be added.
 
-## Usage
+###### getCart()
 
-1. Make HTTP requests to the provided endpoints using your preferred tool (e.g., cURL, Postman).
-2. Receive JSON responses containing weather forecast data.
+- Functionality: Retrieves the current items in the shopping cart.
+- Returns: A Map representing the items in the cart.
 
-## Contributing
+###### clearCart()
 
-Contributions are welcome! Feel free to open issues or submit pull requests.
+- Functionality: Clears all items from the shopping cart.
 
-## License
+##### Usage
 
-This project is licensed under the [MIT License](LICENSE).
+Call the provided methods to manage the shopping cart.
+
+---
+
+## Order API
+
+### OrderController
+
+The OrderController is responsible for handling operations related to orders in the e-commerce application.
+
+#### Endpoints
+
+##### Checkout
+
+- Endpoint: `/order/checkout`
+- Method: POST
+- Functionality: Initiates the checkout process, creating an order based on the provided cart information.
+- Request Body:
+  {
+    "ExampleItem1": 19.99,
+    "ExampleItem2": 29.99
+  }
+
+##### Get Orders
+
+- Endpoint: `/order/list`
+- Method: GET
+- Functionality: Retrieves a list of all orders.
+
+##### Get Discount Codes
+
+- Endpoint: `/order/discount-codes`
+- Method: GET
+- Functionality: Retrieves a list of available discount codes.
+
+#### Usage
+
+Make requests to the provided endpoints to manage orders.
+
+#### OrderService
+
+The OrderService provides business logic for handling order-related operations in the e-commerce application.
+
+##### Methods
+
+###### checkout(Map<String, Double> cart)
+
+- Functionality: Processes the checkout, creating an order based on the provided cart information.
+- Parameters:
+  - cart: A Map representing the items in the cart.
+
+###### getOrders()
+
+- Functionality: Retrieves a list of all orders.
+- Returns: A List<Order> containing information about all orders.
+
+###### getDiscountCodes()
+
+- Functionality: Retrieves a list of available discount codes.
+- Returns: A List<String> containing available discount codes.
+
+##### Usage
+
+Call the provided methods to manage orders.
+
+---
+
+## CORS Configuration
+
+The CORS configuration allows cross-origin requests from a specific frontend URL (http://localhost:4200).
+
+### CORSConfig
+
+The CORSConfig class in the com.assessment.ecommerce package provides CORS configuration for the application.
+
+#### Configuration
+
+- Allowed Origins: http://localhost:4200
+- Allowed Methods: GET, POST, PUT, DELETE
+- Allowed Headers: *
+
+#### Usage
+
+1. Run the application.
+2. Frontend applications running at http://localhost:4200 are allowed to make cross-origin requests.
+
+---
+
+## Swagger Documentation
+
+The Swagger documentation provides an interactive API documentation for the application. To access Swagger UI, navigate to:
+
+- Swagger UI: http://localhost:8080/swagger-ui.html
+- Swagger JSON: http://localhost:8080/v2/api-docs
+
+---
+
+## Test Cases
+
+Test cases have been added to ensure the correctness of the application's functionality. The tests cover scenarios for cart management, order processing, and CORS configuration.
+
+### Running Tests
+
+To run the tests, use the following command:
+
+./mvnw test
+
+## Contributors
+
+- Abhishek Yadav
+
+Feel free to contribute by raising issues or submitting pull requests!
